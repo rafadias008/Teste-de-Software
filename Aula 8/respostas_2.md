@@ -1,30 +1,5 @@
 # Análise MC/DC: embarque
 
-## a) Regra e pares independentes
-
-A especificação exige cartão e documento válidos e que a pessoa tenha sido chamada ou possua prioridade:
-
-pares_independentes(decisao, n) enumera as $2^n$ linhas da tabela-verdade, compara linhas que diferem somente em uma condição e guarda o par se a decisão mudar. Os índices são baseados na ordem lexicográfica da tabela, começando em zero, com False antes de True.
-
-| Índice | A | B | C | D | Resultado da regra |
-|---:|:---:|:---:|:---:|:---:|:---:|
-| 0 | F | F | F | F | F |
-| 1 | F | F | F | V | F |
-| 2 | F | F | V | F | F |
-| 3 | F | F | V | V | F |
-| 4 | F | V | F | F | F |
-| 5 | F | V | F | V | F |
-| 6 | F | V | V | F | F |
-| 7 | F | V | V | V | F |
-| 8 | V | F | F | F | F |
-| 9 | V | F | F | V | F |
-| 10 | V | F | V | F | F |
-| 11 | V | F | V | V | F |
-| 12 | V | V | F | F | F |
-| 13 | V | V | F | V | V |
-| 14 | V | V | V | F | V |
-| 15 | V | V | V | V | V |
-
 ## b) Quantidade de pares e conjuntos mínimos
 
 - $A$: 3 pares: (5, 13), (6, 14) e (7, 15). Para $A$ alterar o resultado, $B$ deve ser V e pelo menos uma entre $C$ e $D$ deve ser V.
@@ -45,8 +20,6 @@ As linhas 12, 13 e 14 são necessárias para os pares únicos de $C$ e $D$. Para
 
 ## c) Testes com todos V e todos F
 
-Com (V, V, V, V), a regra e a função defeituosa retornam V. Com (F, F, F, F), ambas retornam F. Portanto, esses dois testes não expõem a diferença. O código disponível em embarque.py expressa as decisões como expressões booleanas de curto-circuito; medir somente os casos extremos não equivale a cobrir cada efeito independente das quatro condições.
-
 A medição isolada executou os dois casos com sucesso e exibiu 100% de cobertura, mas contou zero ramos. As expressões and/or são cobertas como linhas, sem decisões de ramo registradas pelo coverage.py nessa função. Portanto, esse 100% não comprova avaliação independente das condições nem ausência do defeito.
 
 ## d) Detecção do defeito e correção
@@ -57,4 +30,3 @@ M1 não contém caso com $D=V$ e $A\land B=F$, então não detecta o problema. M
 
 O MCC (Multiple Condition Coverage) exige todas as $2^4=16$ combinações. Ele necessariamente inclui as linhas 5 e 9, logo sempre revela essa divergência.
 
-A correção é agrupar a alternativa com parênteses: cartao and documento and (grupo_chamado or prioridade). A função pode_embarcar em embarque.py já usa essa expressão; pode_embarcar_defeituosa preserva a expressão original para comparação nos testes.
