@@ -13,3 +13,21 @@ A)
 11 - ":dia: ?dia?" dá {"dia": 2}
 
 Justificativa -> Iniciei realizando transformando as palavras em LOWER, após fiz a retirada dos simblos expecificados no teste. Após iniciei o restante dos testes
+
+
+C)
+
+![](image.png)
+Não, existe primeiro o erro, após vem o primeiro green
+
+D)
+
+E)
+
+11 testes
+
+10 Passaram
+
+1 Sobreviveu
+
+10 / 11 = 90%
